@@ -10,15 +10,15 @@
     <script src="https://unpkg.com/scrollama"></script>
     <style>
         body {
-            margin:0; 
-            padding:0; 
+            margin:0;
+            padding:0;
             font-family: sans-serif;
         }
         a, a:hover, a:visited {
             color: #0071bc;
         }
         #map {
-            top:0; 
+            top:0;
             height: 100vh;
             width:100vw;
             position: fixed;
@@ -40,8 +40,8 @@
             font-size: 13px;
         }
         #features {
-            padding-top: 10vh;
-            padding-bottom: 10vh;
+            /* padding-top: 10vh;
+            padding-bottom: 10vh; */
             z-index: 100;
         }
         .centered {
@@ -56,9 +56,15 @@
             width: 33vw;
             margin-left: 62vw;
         }
+        .fully {
+            width: 100vw;
+        }
         .light {
             color: #444;
             background-color: #fafafa;
+        }
+        .trans {
+            background-color: transparent;
         }
         .dark {
             color: #fafafa;
@@ -71,12 +77,17 @@
         }
         .step.active {
             opacity: 0.9;
+
         }
 
         .step div {
-            padding:  25px 50px;
+            /* padding:  25px 50px; */
             line-height: 25px;
             font-size: 13px;
+            height: 100vh;
+            min-height: 100vh;
+            /* background-color: green; */
+
         }
 
         .step img {
@@ -109,7 +120,8 @@ var layerTypes = {
 var alignments = {
     'left': 'lefty',
     'center': 'centered',
-    'right': 'righty'
+    'right': 'righty',
+    'full': 'fully'
 }
 
 function getLayerPaintType(layer) {
@@ -158,19 +170,19 @@ if (header.innerText.length > 0) {
 config.chapters.forEach((record, idx) => {
     var container = document.createElement('div');
     var chapter = document.createElement('div');
-    
+
     if (record.title) {
-        var title = document.createElement('h3');
+        var title = document.createElement('span');
         title.innerText = record.title;
         chapter.appendChild(title);
     }
-    
+
     if (record.image) {
-        var image = new Image();  
-        image.src = record.image;  
+        var image = new Image();
+        image.src = record.image;
         chapter.appendChild(image);
     }
-    
+
     if (record.description) {
         var story = document.createElement('p');
         story.innerHTML = record.description;
@@ -207,11 +219,11 @@ if (footer.innerText.length > 0) {
 mapboxgl.accessToken = config.accessToken;
 
 const transformRequest = (url) => {
-    const hasQuery = url.indexOf("?") !== -1;	  
-    const suffix = hasQuery ? "&pluginName=journalismScrollytelling" : "?pluginName=journalismScrollytelling";	  
+    const hasQuery = url.indexOf("?") !== -1;
+    const suffix = hasQuery ? "&pluginName=journalismScrollytelling" : "?pluginName=journalismScrollytelling";
     return {
       url: url + suffix
-    }	  
+    }
 }
 
 var map = new mapboxgl.Map({
